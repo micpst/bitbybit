@@ -118,16 +118,21 @@ def main():
         # Evaluate hashed model accuracy (before fine-tuning)
         hashed_acc_before = evaluate_model(hashed_model, test_loader, device)
         print(f"Hashed model accuracy (before training): {hashed_acc_before:.2f}%")
-        
-        # Fine-tune the hashed model
-        print("Fine-tuning hashed model...")
-        final_acc = train_model(hashed_model, train_loader, test_loader, device, epochs=3, lr=0.0001)
-        print(f"Final accuracy after fine-tuning: {final_acc:.2f}%")
-        
+           
         # Calculate accuracy drop and score
-        acc_drop = (original_acc - final_acc) / 100.0
+        acc_drop = (original_acc - hashed_acc_before) / 100.0
         score = calculate_submission_score(hashed_model, acc_drop)
         print(f"Accuracy drop: {acc_drop:.4f}, Score: {score:.4f}")
+
+        # Fine-tune the hashed model
+        # print("Fine-tuning hashed model...")
+        # final_acc = train_model(hashed_model, train_loader, test_loader, device, epochs=3, lr=0.0001)
+        # print(f"Final accuracy after fine-tuning: {final_acc:.2f}%")
+        
+        # Calculate accuracy drop and score
+        # acc_drop = (original_acc - final_acc) / 100.0
+        # score = calculate_submission_score(hashed_model, acc_drop)
+        # print(f"Accuracy drop: {acc_drop:.4f}, Score: {score:.4f}")
         
         # Store model
         torch.save(hashed_model.state_dict(), OUTPUT_DIR / f"{model_name}.pth")
