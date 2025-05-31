@@ -19,12 +19,36 @@ class RandomProjKernel(_HashKernel):
         return self._random_projection_matrix
 
     def _compute_codes_internal(self, unit_vectors: torch.Tensor) -> torch.Tensor:
-        raise NotImplementedError("Expected to be implemented by Challenge Participants")
+        # Compute hash codes using random projection
+        # unit_vectors: (..., in_features)
+        # projection_matrix: (hash_length, in_features)
+        # Output: (..., hash_length) with values in {-1, 1}
+        
+        projections = unit_vectors @ self.projection_matrix.T  # (..., hash_length)
+        codes = torch.sign(projections)  # Convert to {-1, 1}
+        return codes
 
     def _estimate_cosine_internal(
         self, codes_1: torch.Tensor, codes_2_matmuled: torch.Tensor
     ) -> torch.Tensor:
-        raise NotImplementedError("Expected to be implemented by Challenge Participants")
+        # Estimate cosine similarity from hash codes
+        # codes_1: (B, K) - hash codes for first set of vectors
+        # codes_2_matmuled: (K, M) - hash codes for second set, transposed
+        # Output: (B, M) - estimated cosine similarities
+        
+        # Compute inner product of hash codes
+        dot_product = codes_1 @ codes_2_matmuled  # (B, M)
+        
+        # Convert to similarity ratio in [-1, 1]
+        hamming_similarity = dot_product / self.hash_length
+        
+        # Estimate cosine similarity using the LSH formula
+        # For random hyperplane LSH: cos(θ) ≈ cos(π * (1 - hamming_similarity) / 2)
+        # Simplified approximation: cos(θ) ≈ sin(π/2 * hamming_similarity)
+        theta_estimate = math.pi / 2 * hamming_similarity
+        cosine_estimate = torch.sin(theta_estimate)
+        
+        return cosine_estimate
 
     def extra_repr(self) -> str:
         return (

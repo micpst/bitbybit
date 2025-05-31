@@ -21,12 +21,44 @@ class LearnedProjKernel(_HashKernel):
         return self._learnable_projection_matrix
 
     def _compute_codes_internal(self, unit_vectors: torch.Tensor) -> torch.Tensor:
-        raise NotImplementedError("Expected to be implemented by Challenge Participants")
+        # Compute hash codes using learned projection with STE
+        # unit_vectors: (..., in_features)
+        # projection_matrix: (hash_length, in_features)
+        # Output: (..., hash_length) with values in {-1, 1}
+        
+        projections = unit_vectors @ self.projection_matrix.T  # (..., hash_length)
+        
+        # Apply Straight-Through Estimator for gradient flow
+        # Forward: binary codes, Backward: pass through gradients
+        codes_hard = torch.sign(projections)  # Hard binary codes {-1, 1}
+        codes_soft = torch.tanh(projections)  # Soft approximation for gradients
+        
+        # STE: use hard codes in forward, but gradients flow through soft codes
+        codes = codes_hard.detach() + codes_soft - codes_soft.detach()
+        
+        return codes
 
     def _estimate_cosine_internal(
         self, codes_1: torch.Tensor, codes_2_matmuled: torch.Tensor
     ) -> torch.Tensor:
-        raise NotImplementedError("Expected to be implemented by Challenge Participants")
+        # Estimate cosine similarity from hash codes (same as RandomProjKernel)
+        # codes_1: (B, K) - hash codes for first set of vectors
+        # codes_2_matmuled: (K, M) - hash codes for second set, transposed
+        # Output: (B, M) - estimated cosine similarities
+        
+        # Compute inner product of hash codes
+        dot_product = codes_1 @ codes_2_matmuled  # (B, M)
+        
+        # Convert to similarity ratio in [-1, 1]
+        hamming_similarity = dot_product / self.hash_length
+        
+        # Estimate cosine similarity using the LSH formula
+        # For random hyperplane LSH: cos(θ) ≈ cos(π * (1 - hamming_similarity) / 2) (use this)
+        # Simplified approximation: cos(θ) ≈ sin(π/2 * hamming_similarity)
+        theta_estimate = math.pi / 2 * hamming_similarity
+        cosine_estimate = torch.sin(theta_estimate)
+        
+        return cosine_estimate
 
     def extra_repr(self) -> str:
         return (
