@@ -126,7 +126,7 @@ def main():
 
         # Fine-tune the hashed model
         print("Fine-tuning hashed model...")
-        final_acc = train_model(hashed_model, train_loader, test_loader, device, epochs=3, lr=0.0001)
+        final_acc = train_model(hashed_model, train_loader, test_loader, device, epochs=5, lr=0.001)
         print(f"Final accuracy after fine-tuning: {final_acc:.2f}%")
         
         # Calculate accuracy drop and score
