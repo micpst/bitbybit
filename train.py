@@ -70,7 +70,7 @@ def main():
     cifar_10_train_loader, cifar_10_test_loader = get_loaders(
         dataset_name="CIFAR10",
         data_dir=Path(__file__).parent / "data",
-        batch_size=128,
+        batch_size=64,
         mean=CIFAR10_MEAN,
         std=CIFAR10_STD,
         num_workers=2,
@@ -80,7 +80,7 @@ def main():
     cifar_100_train_loader, cifar_100_test_loader = get_loaders(
         dataset_name="CIFAR100",
         data_dir=Path(__file__).parent / "data",
-        batch_size=128,     
+        batch_size=64,
         mean=CIFAR100_MEAN,
         std=CIFAR100_STD,
         num_workers=2,
