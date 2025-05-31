@@ -70,7 +70,7 @@ def main():
     cifar_10_train_loader, cifar_10_test_loader = get_loaders(
         dataset_name="CIFAR10",
         data_dir=Path(__file__).parent / "data",
-        batch_size=128,
+        batch_size=64,
         mean=CIFAR10_MEAN,
         std=CIFAR10_STD,
         num_workers=2,
@@ -80,7 +80,7 @@ def main():
     cifar_100_train_loader, cifar_100_test_loader = get_loaders(
         dataset_name="CIFAR100",
         data_dir=Path(__file__).parent / "data",
-        batch_size=128,     
+        batch_size=64,     
         mean=CIFAR100_MEAN,
         std=CIFAR100_STD,
         num_workers=2,
@@ -125,14 +125,14 @@ def main():
         print(f"Accuracy drop: {acc_drop:.4f}, Score: {score:.4f}")
 
         # Fine-tune the hashed model
-        # print("Fine-tuning hashed model...")
-        # final_acc = train_model(hashed_model, train_loader, test_loader, device, epochs=3, lr=0.0001)
-        # print(f"Final accuracy after fine-tuning: {final_acc:.2f}%")
+        print("Fine-tuning hashed model...")
+        final_acc = train_model(hashed_model, train_loader, test_loader, device, epochs=3, lr=0.0001)
+        print(f"Final accuracy after fine-tuning: {final_acc:.2f}%")
         
         # Calculate accuracy drop and score
-        # acc_drop = (original_acc - final_acc) / 100.0
-        # score = calculate_submission_score(hashed_model, acc_drop)
-        # print(f"Accuracy drop: {acc_drop:.4f}, Score: {score:.4f}")
+        acc_drop = (original_acc - final_acc) / 100.0
+        score = calculate_submission_score(hashed_model, acc_drop)
+        print(f"Accuracy drop: {acc_drop:.4f}, Score: {score:.4f}")
         
         # Store model
         torch.save(hashed_model.state_dict(), OUTPUT_DIR / f"{model_name}.pth")
