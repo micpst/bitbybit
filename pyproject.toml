@@ -7,7 +7,7 @@ name = "semron-submission-system"
 version = "0.1.0"
 description = "Secure submission system for SEMRON leaderboard"
 dependencies = [
-    "torch",
+    "torch==2.4.1",
     "torchvision",
     "waitress==3.0.2",
     "flask==2.3.3",
