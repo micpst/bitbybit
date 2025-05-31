@@ -44,11 +44,8 @@ class RandomProjKernel(_HashKernel):
         
         # Estimate cosine similarity using the LSH formula
         # For random hyperplane LSH: cos(θ) ≈ cos(π * (1 - hamming_similarity) / 2)
-        # Simplified approximation: cos(θ) ≈ sin(π/2 * hamming_similarity)
-        theta_estimate = math.pi / 2 * hamming_similarity
-        cosine_estimate = torch.sin(theta_estimate)
-        
-        return cosine_estimate
+        theta_estimate = math.pi * (1 - hamming_similarity) / 2
+        return torch.cos(theta_estimate)
 
     def extra_repr(self) -> str:
         return (
