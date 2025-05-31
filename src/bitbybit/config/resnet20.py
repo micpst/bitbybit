@@ -3,7 +3,7 @@ resnet20_full_patch_config = {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 128
+        "hash_length": 1024
     },
     
     # Layer 1 - very small
@@ -11,37 +11,37 @@ resnet20_full_patch_config = {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 128
+        "hash_length": 1024
     },
     "layer1.0.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 128
+        "hash_length": 1024
     },
     "layer1.1.conv1": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 128
+        "hash_length": 1024
     },
     "layer1.1.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 128
+        "hash_length": 1024
     },
     "layer1.2.conv1": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 128
+        "hash_length": 1024
     },
     "layer1.2.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 128
+        "hash_length": 1024
     },
 
     # Layer 2 - small
@@ -49,43 +49,43 @@ resnet20_full_patch_config = {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 256
+        "hash_length": 2048
     },
     "layer2.0.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 256
+        "hash_length": 2048
     },
     "layer2.0.downsample.0": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 256
+        "hash_length": 2048
     },
     "layer2.1.conv1": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 256
+        "hash_length": 2048
     },
     "layer2.1.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 256
+        "hash_length": 2048
     },
     "layer2.2.conv1": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 256
+        "hash_length": 2048
     },
     "layer2.2.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 256
+        "hash_length": 2048
     },
 
     # Layer 3 - medium
@@ -93,43 +93,43 @@ resnet20_full_patch_config = {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 512
+        "hash_length": 4096
     },
     "layer3.0.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 512
+        "hash_length": 4096
     },
     "layer3.0.downsample.0": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 512
+        "hash_length": 4096
     },
     "layer3.1.conv1": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 512
+        "hash_length": 4096
     },
     "layer3.1.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 512
+        "hash_length": 4096
     },
     "layer3.2.conv1": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 512
+        "hash_length": 4096
     },
     "layer3.2.conv2": {
         "hash_kernel_type": "learned_projection",
         "input_tile_size": 128,
         "output_tile_size": 128,
-        "hash_length": 512
+        "hash_length": 4096
     },
 
     # Only FC layer gets decent hash length
